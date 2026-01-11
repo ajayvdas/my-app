@@ -1,7 +1,7 @@
 import { Suspense } from "react"
-import AppSidebar from "@/components/app-sidebar"
-// import { ProjectsContent } from "@/components/projects-content"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import AppSidebar from "@/components/app-sidebar"
+import MainContent from "@/components/main-content"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <AppSidebar />
       <SidebarInset>
         <Suspense fallback={<Skeleton className="h-4 w-62.5" />}>
-          {/* <ProjectsContent /> */}
+          <MainContent />
         </Suspense>
       </SidebarInset>
     </SidebarProvider>
