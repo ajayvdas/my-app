@@ -1,10 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { Suspense } from "react"
+import AppSidebar from "@/components/app-sidebar"
+// import { ProjectsContent } from "@/components/projects-content"
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-red-700">Hello</h1>
-      <Button>Hello world</Button>
-    </div>
-  );
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <Suspense fallback={<Skeleton className="h-4 w-62.5" />}>
+          {/* <ProjectsContent /> */}
+        </Suspense>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
