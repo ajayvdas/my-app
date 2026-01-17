@@ -11,9 +11,9 @@ interface ProjectItemCardProps {
     client: string
     type: string
     duration: string
-    status: "Active" | "Completed" | "On Hold" | "Archived"
+    status: "Active" | "Completed" | "On Hold" | "Archived" | "Backlog" | "Planned"
     date: string
-    priority: "High" | "Medium" | "Low"
+    priority: "High" | "Medium" | "Low" | "Urgent"
     progress: number
     completedTasks: number
     totalTasks: number
@@ -40,12 +40,15 @@ export default function ProjectItemCard({
         Completed: "bg-green-50 text-green-700 border-green-100",
         "On Hold": "bg-yellow-50 text-yellow-700 border-yellow-100",
         Archived: "bg-gray-50 text-gray-700 border-gray-100",
+        Backlog: "bg-slate-50 text-slate-700 border-slate-100",
+        Planned: "bg-purple-50 text-purple-700 border-purple-100",
     }
 
     const priorityColors = {
         High: "text-red-600",
         Medium: "text-orange-600",
         Low: "text-blue-600",
+        Urgent: "text-rose-700",
     }
 
     return (

@@ -1,5 +1,7 @@
 import { Link, Plus } from "lucide-react";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Button } from "./ui/button";
+import { ThemeToggle } from "./theme-toggle";
 
 export default function ProjectsHeader() {
     return (
@@ -9,11 +11,12 @@ export default function ProjectsHeader() {
                 <p className="text-base font-medium text-foreground">Projects</p>
             </div>
             <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <Link className="h-4 w-4" />
-                <span className="flex items-center text-base font-medium text-foreground">
+                <Button variant="outline" className="flex items-center text-base font-medium text-foreground border-none hover:bg-accent hover:text-foreground hover:border-none">
                     <Plus className="h-4 w-4" size={16} />
                     <p className="ml-2">Add Project</p>
-                </span>
+                </Button>
             </div>
         </header>
     )
