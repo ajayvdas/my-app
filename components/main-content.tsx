@@ -1,8 +1,15 @@
-import ProjectsActionBar from "./ProjectsActionBar";
-import ProjectsHeader from "./ProjectsHeader";
-import ProjectsList from "./ProjectsList";
+'use client'
+import { useState } from "react";
+import ProjectsActionBar from "./projects-action-bar";
+import ProjectsHeader from "./projects-header";
+import ProjectsList from "./projects-list";
+import ProjectsBoard from "./projects-board";
+import ProjectsTimeline from "./projects-timeline";
+
+type ViewType = "list" | "board" | "timeline"
 
 export default function MainContent() {
+    const [view, setView] = useState<ViewType>("list")
     return (
         <div className="flex flex-1 flex-col m-2 border rounded-lg">
             {/* ProjectsHeader */}
@@ -10,7 +17,9 @@ export default function MainContent() {
             {/* ProjectsActionBar */}
             <ProjectsActionBar />
             {/* ProjectsList */}
-            <ProjectsList />
+            {view === "list" && <ProjectsList />}
+            {view === "board" && <ProjectsBoard />}
+            {view === "timeline" && <ProjectsTimeline />}
         </div>
     )
 }

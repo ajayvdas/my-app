@@ -2,7 +2,7 @@ import { Sparkles, SlidersHorizontal, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import FilterPopover from "./FilterPopover";
-import ViewPopoverContent from "./ViewPopoverContent";
+import ViewPopoverContent from "./view-popover-content";
 
 export default function ProjectsActionBar() {
     return (
