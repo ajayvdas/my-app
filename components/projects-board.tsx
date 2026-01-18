@@ -3,11 +3,10 @@
 import React, { useState } from 'react'
 import { Card, CardHeader, CardTitle, CardContent, CardAction } from './ui/card'
 import { Button } from './ui/button'
-import { Plus, MoreHorizontal } from 'lucide-react'
+import { Plus, Layers, Loader, LoaderCircle, CircleCheck, EllipsisVertical } from 'lucide-react'
 import ProjectItemCard from './project-item-card'
 import { Badge } from './ui/badge'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
-import { Separator } from './ui/separator'
 
 // Mock data organized by status
 const mockProjectsByStatus = {
@@ -169,15 +168,29 @@ interface BoardColumnProps {
     projects: typeof mockProjectsByStatus[StatusType]
 }
 
+function columnStatusIcon(status: StatusType) {
+    switch (status) {
+        case 'Backlog':
+            return <Layers className='h-4 w-4 text-muted-foreground' />
+        case 'Planned':
+            return <Loader className='h-4 w-4 text-muted-foreground' />
+        case 'Active':
+            return <LoaderCircle className='h-4 w-4 text-muted-foreground' />
+        case 'Completed':
+            return <CircleCheck className='h-4 w-4 text-muted-foreground' />
+    }
+}
+
 function BoardColumn({ column, projects }: BoardColumnProps) {
     return (
         <div className='flex-shrink-0 w-[280px] flex flex-col max-h-full'>
-            <Card className='flex flex-col h-full bg-muted/40 border-border/50 shadow-sm'>
+            <Card className='flex flex-col h-full bg-muted/40 border-border/50  shadow-sm p-0 pt-3'>
                 {/* Column Header */}
-                <CardHeader className='pb-3'>
+                <CardHeader className='px-2'>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-2'>
-                            <CardTitle className='text-sm font-medium text-muted-foreground'>
+                            <CardTitle className='text-sm font-medium text-muted-foreground flex items-center gap-2'>
+                                {columnStatusIcon(column.id)}
                                 {column.title}
                             </CardTitle>
                             <Badge
@@ -187,7 +200,7 @@ function BoardColumn({ column, projects }: BoardColumnProps) {
                                 {column.count}
                             </Badge>
                         </div>
-                        <CardAction>
+                        <CardAction className='text-muted-foreground'>
                             <div className='flex items-center gap-0.5'>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -212,7 +225,7 @@ function BoardColumn({ column, projects }: BoardColumnProps) {
                                             size="icon"
                                             className='h-7 w-7 hover:bg-muted'
                                         >
-                                            <MoreHorizontal className='h-4 w-4' />
+                                            <EllipsisVertical className='h-4 w-4' />
                                             <span className='sr-only'>More options</span>
                                         </Button>
                                     </TooltipTrigger>
@@ -224,11 +237,8 @@ function BoardColumn({ column, projects }: BoardColumnProps) {
                         </CardAction>
                     </div>
                 </CardHeader>
-
-                <Separator className='mx-6' />
-
                 {/* Column Content */}
-                <CardContent className='flex-1 overflow-y-auto pt-4 space-y-3'>
+                <CardContent className='flex-1 overflow-y-auto space-y-3 mt-0 pt-1 px-2'>
                     {projects.map((project) => (
                         <ProjectItemCard key={project.id} {...project} />
                     ))}

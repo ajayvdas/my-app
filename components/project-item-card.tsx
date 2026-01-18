@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Folder, Calendar, TrendingUp, ListChecks } from "lucide-react"
+import { Calendar, TrendingUp, ListChecks, Flag, EllipsisVertical } from "lucide-react"
 import { ProgressCircle } from "./progress-circle"
 import { Separator } from "./ui/separator"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "./ui/select"
 
 interface ProjectItemCardProps {
     id: string
@@ -54,15 +55,32 @@ export default function ProjectItemCard({
     return (
         <Card className="hover:shadow-lg/5 border-border/50 border transition-shadow duration-200 cursor-pointer rounded-2xl p-0 focus:outline-none">
             <CardContent className="p-6 pb-2">
-                {/* Header with Folder Icon and Status Badge */}
+                {/* Header with Flag Icon and Status Badge */}
                 <div className="flex items-center justify-between mb-4">
-                    <Folder className="w-4 h-4 text-gray-600" />
-                    <Badge
-                        variant="outline"
-                        className={`${statusColors[status]} font-medium text-xs px-2 py-0`}
-                    >
-                        • {status}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                        <Flag className="w-4 h-4 text-gray-600" />
+                        <span className="text-muted-foreground text-xs">{date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className={`flex items-center gap-1.5 font-medium text-xs ${priorityColors[priority]}`}>
+                            <TrendingUp className="w-4 h-4" />
+                            <span>{priority}</span>
+                        </div>
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <Select onValueChange={(value) => console.log('Selected:', value)}>
+                                <SelectTrigger hideIcon className="!w-auto !h-auto !border-0 !bg-transparent !p-1 hover:!bg-accent !rounded-md !shadow-none focus:!ring-0 focus:!ring-offset-0 focus-visible:!ring-0">
+                                    <SelectValue className="sr-only" />
+                                    <EllipsisVertical className="w-4 h-4 text-muted-foreground" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="backlog">Move to backlog</SelectItem>
+                                    <SelectItem value="planned">Move to planned</SelectItem>
+                                    <SelectItem value="active">Move to active</SelectItem>
+                                    <SelectItem value="completed">Move to completed</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Project Title */}
@@ -71,23 +89,11 @@ export default function ProjectItemCard({
                 </h3>
 
                 {/* Project Details */}
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-gray-600 mb-2 truncate whitespace-nowrap">
                     {client} • {type} • {duration}
                 </p>
 
-                {/* Date and Priority */}
-                <div className="flex items-center justify-between mb-2 text-sm">
-                    <div className="flex items-center gap-1.5 text-muted-foreground">
-                        <Calendar className="w-4 h-4" />
-                        <span>{date}</span>
-                    </div>
-                    <div className={`flex items-center gap-1.5 font-medium ${priorityColors[priority]}`}>
-                        <TrendingUp className="w-4 h-4" />
-                        <span>{priority}</span>
-                    </div>
-                </div>
-
-                <Separator className="mb-4" />
+                <Separator className="mb-2" />
 
                 {/* Progress and Tasks */}
                 <div className="flex items-center justify-between gap-3 text-muted-foreground">
