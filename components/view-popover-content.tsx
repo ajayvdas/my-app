@@ -31,16 +31,16 @@ export default function ViewPopoverContent() {
 
     return (
         <Tabs defaultValue="List" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-                <TabsTrigger value="List" className="flex items-center gap-2">
+            <TabsList className="grid w-full grid-cols-3 mb-4 h-16 p-2">
+                <TabsTrigger value="List" className="flex flex-col items-center gap-2">
                     <List className="h-4 w-4" />
                     <span>List</span>
                 </TabsTrigger>
-                <TabsTrigger value="Board" className="flex items-center gap-2">
+                <TabsTrigger value="Board" className="flex flex-col items-center gap-2">
                     <LayoutDashboard className="h-4 w-4" />
                     <span>Board</span>
                 </TabsTrigger>
-                <TabsTrigger value="Timeline" className="flex items-center gap-2">
+                <TabsTrigger value="Timeline" className="flex flex-col items-center gap-2">
                     <BarChart3 className="h-4 w-4" />
                     <span>Timeline</span>
                 </TabsTrigger>
@@ -137,8 +137,8 @@ export default function ViewPopoverContent() {
                                     key={property.id}
                                     onClick={() => toggleProperty(property.id)}
                                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-sm transition-colors ${isSelected
-                                            ? "bg-white border-gray-300 text-gray-900"
-                                            : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"
+                                        ? "bg-white border-gray-300 text-gray-900"
+                                        : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"
                                         }`}
                                 >
                                     <Icon className="h-4 w-4" />
