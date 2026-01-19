@@ -9,9 +9,9 @@ import ProjectsTimeline from "./projects-timeline";
 type ViewType = "list" | "board" | "timeline"
 
 export default function MainContent() {
-    const [view, setView] = useState<ViewType>("board")
+    const [view, setView] = useState<ViewType>("timeline")
     return (
-        <div className="flex flex-1 flex-col m-2 border rounded-lg">
+        <div className="flex flex-1 flex-col m-2 border rounded-lg min-w-0 overflow-x-hidden">
             {/* ProjectsHeader */}
             <ProjectsHeader />
             {/* ProjectsActionBar */}
