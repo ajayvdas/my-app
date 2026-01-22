@@ -3,8 +3,14 @@ import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import FilterPopover from "./FilterPopover";
 import ViewPopoverContent from "./view-popover-content";
+import { ViewType } from "@/lib/types";
 
-export default function ProjectsActionBar() {
+interface ProjectsActionBarProps {
+    view: ViewType;
+    setView: (view: ViewType) => void;
+}
+
+export default function ProjectsActionBar({ view, setView }: ProjectsActionBarProps) {
     return (
         <div className="flex items-center justify-between p-2 border-b">
             <Popover>
@@ -27,7 +33,7 @@ export default function ProjectsActionBar() {
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent align="end" className="w-96 p-4 rounded-xl">
-                        <ViewPopoverContent />
+                        <ViewPopoverContent view={view} setView={setView} />
                     </PopoverContent>
                 </Popover>
                 <Button variant="outline" size="sm" className="rounded-full border-none">

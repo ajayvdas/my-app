@@ -8,8 +8,14 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import { ViewType } from "@/lib/types";
 
-export default function ViewPopoverContent() {
+interface ViewPopoverContentProps {
+    view: ViewType;
+    setView: (view: ViewType) => void;
+}
+
+export default function ViewPopoverContent({ view, setView }: ViewPopoverContentProps) {
     const [showAbsentParent, setShowAbsentParent] = useState(false);
     const [showClosedProjects, setShowClosedProjects] = useState(true);
     const [selectedProperties, setSelectedProperties] = useState(["title", "status", "assignee", "dueDate"]);
@@ -30,23 +36,23 @@ export default function ViewPopoverContent() {
     ];
 
     return (
-        <Tabs defaultValue="List" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-4 h-16 p-2">
-                <TabsTrigger value="List" className="flex flex-col items-center gap-2">
+        <Tabs value={view} onValueChange={(value) => setView(value as ViewType)} className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-4 h-20 p-1.5">
+                <TabsTrigger value="list" className="flex flex-col items-center gap-1 py-2">
                     <List className="h-4 w-4" />
                     <span>List</span>
                 </TabsTrigger>
-                <TabsTrigger value="Board" className="flex flex-col items-center gap-2">
+                <TabsTrigger value="board" className="flex flex-col items-center gap-1 py-2">
                     <LayoutDashboard className="h-4 w-4" />
                     <span>Board</span>
                 </TabsTrigger>
-                <TabsTrigger value="Timeline" className="flex flex-col items-center gap-2">
+                <TabsTrigger value="timeline" className="flex flex-col items-center gap-1 py-2">
                     <BarChart3 className="h-4 w-4" />
                     <span>Timeline</span>
                 </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="List" className="space-y-4 mt-0">
+            <TabsContent value="list" className="space-y-4 mt-0">
                 {/* Tasks Section */}
                 <div className="space-y-3">
                     <h3 className="text-sm font-semibold text-gray-900">Tasks</h3>
@@ -166,11 +172,11 @@ export default function ViewPopoverContent() {
                 </div>
             </TabsContent>
 
-            <TabsContent value="Board" className="space-y-4 mt-0">
+            <TabsContent value="board" className="space-y-4 mt-0">
                 <p className="text-sm text-gray-500">Board view settings coming soon...</p>
             </TabsContent>
 
-            <TabsContent value="Timeline" className="space-y-4 mt-0">
+            <TabsContent value="timeline" className="space-y-4 mt-0">
                 <p className="text-sm text-gray-500">Timeline view settings coming soon...</p>
             </TabsContent>
         </Tabs>
