@@ -8,7 +8,7 @@ import ProjectsTimeline from "./projects-timeline";
 import { ViewType } from "@/lib/types";
 
 export default function MainContent() {
-    const [view, setView] = useState<ViewType>("timeline")
+    const [view, setView] = useState<ViewType>("list")
     return (
         <div className="flex flex-1 flex-col m-2 border rounded-lg min-w-0 overflow-x-hidden">
             <ProjectsHeader />
