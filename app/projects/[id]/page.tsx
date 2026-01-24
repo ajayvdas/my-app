@@ -1,9 +1,14 @@
-export default function ProjectPage() {
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import AppSidebar from "@/components/app-sidebar"
+import ProjectDetailPage from "@/components/projects/project-detail-page"
+
+export default function Page() {
     return (
-        <div>
-            <h1>Project Page</h1>
-        </div>
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+                <ProjectDetailPage />
+            </SidebarInset>
+        </SidebarProvider>
     )
 }
-
-
