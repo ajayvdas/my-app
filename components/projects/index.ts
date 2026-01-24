@@ -7,6 +7,8 @@ export { ProjectSidebar } from './project-sidebar'
 export { ProjectTimeline, TimelineRow } from './project-timeline'
 export { ScopeCard } from './scope-card'
 export { QuickLinkItem } from './quick-link-item'
+export { NotesList } from './notes-list'
+export { AddNoteModal } from './add-note-modal'
 
 // Re-export types
 export type { TimelineRowProps, QuickLinkItemProps } from '@/lib/types/project'
