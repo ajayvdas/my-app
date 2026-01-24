@@ -8,7 +8,7 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { ViewType } from "@/lib/types";
+import { ViewType } from "@/lib/types/project-view-types";
 
 interface ViewPopoverContentProps {
     view: ViewType;

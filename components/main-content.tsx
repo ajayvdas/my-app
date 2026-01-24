@@ -5,7 +5,7 @@ import ProjectsHeader from "./projects-header";
 import ProjectsList from "./projects-list";
 import ProjectsBoard from "./projects-board";
 import ProjectsTimeline from "./projects-timeline";
-import { ViewType } from "@/lib/types";
+import { ViewType } from "@/lib/types/project-view-types";
 
 export default function MainContent() {
     const [view, setView] = useState<ViewType>("list")

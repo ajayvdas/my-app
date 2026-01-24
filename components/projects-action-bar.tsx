@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import FilterPopover from "./FilterPopover";
 import ViewPopoverContent from "./view-popover-content";
-import { ViewType } from "@/lib/types";
+import { ViewType } from "@/lib/types/project-view-types";
 
 interface ProjectsActionBarProps {
     view: ViewType;

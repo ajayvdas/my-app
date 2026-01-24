@@ -8,6 +8,7 @@ import { ProjectTitle } from "./project-title"
 import { ProjectMetadata } from "./project-metadata"
 import { ProjectOverview } from "./project-overview"
 import { ProjectSidebar } from "./project-sidebar"
+import { WorkstreamBreakdown } from "./workstream-breakdown"
 import type { TimelineRowProps } from "@/lib/types/project"
 
 // Mock data - In real app, this would come from props or API
@@ -96,8 +97,6 @@ const overviewData = {
 
 export default function ProjectDetailPage() {
     return (
-
-        // <div className="flex flex-col h-full bg-background">
         <div className="flex flex-1 flex-col m-2 border rounded-lg min-w-0 overflow-x-hidden">
             {/* Breadcrumb Header */}
             <ProjectHeader projectTitle={projectData.title} />
@@ -106,14 +105,12 @@ export default function ProjectDetailPage() {
             <div className="flex flex-1 overflow-hidden">
                 {/* Left Content */}
                 <main className="flex-1 overflow-y-auto p-6">
-                    {/* Title Section */}
                     <ProjectTitle
                         title={projectData.title}
                         isActive={projectData.isActive}
                         isAssignedToMe={projectData.isAssignedToMe}
                     />
 
-                    {/* Metadata Row */}
                     <ProjectMetadata
                         id={projectData.id}
                         priority={projectData.priority}
@@ -122,7 +119,6 @@ export default function ProjectDetailPage() {
                         lastSync={projectData.lastSync}
                     />
 
-                    {/* Tabs */}
                     <Tabs defaultValue="overview" className="mb-6">
                         <TabsList className="bg-transparent p-0 h-auto border-b rounded-none w-full justify-start gap-0">
                             <TabsTrigger
@@ -161,12 +157,8 @@ export default function ProjectDetailPage() {
                             <ProjectOverview {...overviewData} />
                         </TabsContent>
 
-                        <TabsContent value="workstream">
-                            <Card className="py-8 shadow-none">
-                                <CardContent className="text-center text-muted-foreground">
-                                    Workstream content coming soon
-                                </CardContent>
-                            </Card>
+                        <TabsContent value="workstream" className="mt-6">
+                            <WorkstreamBreakdown />
                         </TabsContent>
                         <TabsContent value="tasks">
                             <Card className="py-8 shadow-none">
@@ -192,7 +184,6 @@ export default function ProjectDetailPage() {
                     </Tabs>
                 </main>
 
-                {/* Right Sidebar */}
                 <ProjectSidebar
                     estimate={projectData.estimate}
                     dueDate={projectData.dueDate}
