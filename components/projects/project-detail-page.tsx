@@ -9,6 +9,7 @@ import { ProjectMetadata } from "./project-metadata"
 import { ProjectOverview } from "./project-overview"
 import { ProjectSidebar } from "./project-sidebar"
 import { WorkstreamBreakdown } from "./workstream-breakdown"
+import { TaskList } from "./task-list"
 import type { TimelineRowProps } from "@/lib/types/project"
 
 // Mock data - In real app, this would come from props or API
@@ -160,13 +161,11 @@ export default function ProjectDetailPage() {
                         <TabsContent value="workstream" className="mt-6">
                             <WorkstreamBreakdown />
                         </TabsContent>
-                        <TabsContent value="tasks">
-                            <Card className="py-8 shadow-none">
-                                <CardContent className="text-center text-muted-foreground">
-                                    Tasks content coming soon
-                                </CardContent>
-                            </Card>
+
+                        <TabsContent value="tasks" className="mt-6">
+                            <TaskList />
                         </TabsContent>
+
                         <TabsContent value="notes">
                             <Card className="py-8 shadow-none">
                                 <CardContent className="text-center text-muted-foreground">
