@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
     Sidebar,
     SidebarContent,
@@ -29,7 +31,6 @@ import {
     Command,
 } from "lucide-react"
 import { ProgressCircle } from "./progress-circle"
-import { useNavigation, NavigationItem } from "@/lib/contexts/navigation-context"
 
 // Mock data
 const workspaceData = {
@@ -39,11 +40,11 @@ const workspaceData = {
 }
 
 const navigationItems = [
-    { name: "Inbox", icon: Inbox, badge: 24 },
-    { name: "My task", icon: CheckSquare },
-    { name: "Projects", icon: Folder, isActive: true },
-    { name: "Clients", icon: Users },
-    { name: "Performance", icon: BarChart3 },
+    { name: "Inbox", icon: Inbox, badge: 24, href: "/inbox" },
+    { name: "My task", icon: CheckSquare, href: "/tasks" },
+    { name: "Projects", icon: Folder, href: "/projects" },
+    { name: "Clients", icon: Users, href: "/clients" },
+    { name: "Performance", icon: BarChart3, href: "/performance" },
 ]
 
 const activeProjects = [
@@ -66,7 +67,16 @@ const userData = {
 
 
 export default function AppSidebar() {
-    const { activeNavigation, setActiveNavigation } = useNavigation()
+    const pathname = usePathname()
+
+    // Helper to determine if a nav item is active
+    const isActive = (href: string) => {
+        if (href === "/projects") {
+            // Match /projects exact or /projects/[id] for nested routes
+            return pathname === "/projects" || pathname.startsWith("/projects/")
+        }
+        return pathname === href || pathname.startsWith(href + "/")
+    }
 
     return (
         <Sidebar>
@@ -111,15 +121,17 @@ export default function AppSidebar() {
                             {navigationItems.map((item) => (
                                 <SidebarMenuItem key={item.name}>
                                     <SidebarMenuButton
-                                        isActive={activeNavigation === item.name}
+                                        asChild
+                                        isActive={isActive(item.href)}
                                         tooltip={item.name}
-                                        onClick={() => setActiveNavigation(item.name as NavigationItem)}
                                     >
-                                        <item.icon className="size-4" />
-                                        <span>{item.name}</span>
-                                        {item.badge && (
-                                            <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                                        )}
+                                        <Link href={item.href}>
+                                            <item.icon className="size-4" />
+                                            <span>{item.name}</span>
+                                            {item.badge && (
+                                                <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                                            )}
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

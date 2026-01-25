@@ -99,19 +99,19 @@ export default function FilterPopover() {
     };
 
     return (
-        <div className="w-[680px] bg-white rounded-lg shadow-lg border border-gray-200">
+        <div className="w-[680px] bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-gray-200 dark:border-zinc-700">
             <div className="flex">
                 {/* Left Panel - Filter Categories */}
-                <div className="w-60 border-r border-gray-200 p-4">
+                <div className="w-60 border-r border-gray-200 dark:border-zinc-700 p-4">
                     {/* Search Input */}
                     <div className="relative mb-4">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-zinc-500" />
                         <Input
                             type="text"
                             placeholder="Search..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-9 h-10 bg-white border-gray-200 focus-visible:ring-1 focus-visible:ring-gray-300"
+                            className="pl-9 h-10 bg-white dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 focus-visible:ring-1 focus-visible:ring-gray-300 dark:focus-visible:ring-zinc-600 dark:text-zinc-100 dark:placeholder:text-zinc-500"
                         />
                     </div>
 
@@ -122,15 +122,15 @@ export default function FilterPopover() {
                                 key={category.id}
                                 onClick={() => setSelectedCategory(category.id)}
                                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm transition-colors ${selectedCategory === category.id
-                                    ? "bg-gray-100 text-gray-900"
-                                    : "text-gray-700 hover:bg-gray-50"
+                                    ? "bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-zinc-100"
+                                    : "text-gray-700 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-zinc-800"
                                     }`}
                             >
                                 <div className="flex items-center gap-2">
                                     {category.icon}
                                     <span className="font-medium">{category.label}</span>
                                 </div>
-                                <span className="text-gray-500 text-xs">{category.count}</span>
+                                <span className="text-gray-500 dark:text-zinc-500 text-xs">{category.count}</span>
                             </button>
                         ))}
                     </div>
@@ -141,12 +141,20 @@ export default function FilterPopover() {
                     {currentCategory && currentCategory.options.length > 0 ? (
                         <div className="grid grid-cols-2 gap-3">
                             {currentCategory.options.map((option) => (
-                                <button
+                                <div
                                     key={option.id}
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={() => toggleFilter(option.id)}
-                                    className={`flex items-center justify-between px-4 py-3.5 rounded-lg border transition-all ${selectedFilters.has(option.id)
-                                        ? "border-gray-300 bg-gray-50"
-                                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            toggleFilter(option.id);
+                                        }
+                                    }}
+                                    className={`flex items-center justify-between px-4 py-3.5 rounded-lg border transition-all cursor-pointer ${selectedFilters.has(option.id)
+                                        ? "border-gray-300 dark:border-zinc-600 bg-gray-50 dark:bg-zinc-800"
+                                        : "border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800"
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
@@ -162,26 +170,26 @@ export default function FilterPopover() {
                                         />
 
                                         {/* Label */}
-                                        <span className="text-sm font-normal text-gray-900">
+                                        <span className="text-sm font-normal text-gray-900 dark:text-zinc-100">
                                             {option.label}
                                         </span>
                                     </div>
 
                                     {/* Count */}
                                     {option.count !== undefined && (
-                                        <span className="text-sm text-gray-500">{option.count}</span>
+                                        <span className="text-sm text-gray-500 dark:text-zinc-500">{option.count}</span>
                                     )}
-                                </button>
+                                </div>
                             ))}
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center h-48 text-gray-400 text-sm">
+                        <div className="flex items-center justify-center h-48 text-gray-400 dark:text-zinc-500 text-sm">
                             No options available
                         </div>
                     )}
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
+                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200 dark:border-zinc-700">
                         <Button
                             variant="link"
                             onClick={handleClear}
@@ -191,7 +199,7 @@ export default function FilterPopover() {
                         </Button>
                         <Button
                             onClick={handleApply}
-                            className="bg-black hover:bg-black text-white px-6"
+                            className="bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black px-6"
                         >
                             Apply
                         </Button>
