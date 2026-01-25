@@ -29,6 +29,7 @@ import {
     Command,
 } from "lucide-react"
 import { ProgressCircle } from "./progress-circle"
+import { useNavigation, NavigationItem } from "@/lib/contexts/navigation-context"
 
 // Mock data
 const workspaceData = {
@@ -63,7 +64,10 @@ const userData = {
     avatar: "/placeholder-avatar.jpg",
 }
 
+
 export default function AppSidebar() {
+    const { activeNavigation, setActiveNavigation } = useNavigation()
+
     return (
         <Sidebar>
             <SidebarHeader>
@@ -107,8 +111,9 @@ export default function AppSidebar() {
                             {navigationItems.map((item) => (
                                 <SidebarMenuItem key={item.name}>
                                     <SidebarMenuButton
-                                        isActive={item.isActive}
+                                        isActive={activeNavigation === item.name}
                                         tooltip={item.name}
+                                        onClick={() => setActiveNavigation(item.name as NavigationItem)}
                                     >
                                         <item.icon className="size-4" />
                                         <span>{item.name}</span>
