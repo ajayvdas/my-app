@@ -3,9 +3,10 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { useState } from "react"
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "./ui/empty"
-import { File } from "lucide-react"
+import { File, Plus } from "lucide-react"
 import { Button } from "./ui/button"
 import ProjectItemCard from "./project-item-card"
+import { Card, CardContent } from "./ui/card"
 
 // Mock data for projects
 const mockProjects = [
@@ -165,6 +166,12 @@ export default function ProjectsList() {
                     {projects.map((project) => (
                         <ProjectItemCard key={project.id} {...project} />
                     ))}
+                    <Card className="hover:shadow-lg/5 dark:hover:shadow-lg dark:hover:shadow-primary/5 border-border/50 dark:border-border/30 border transition-all duration-300 cursor-pointer rounded-2xl p-0 focus:outline-none dark:bg-card/80 dark:backdrop-blur-sm hover:border-border dark:hover:border-border/50">
+                        <CardContent className="p-6 pb-2 flex flex-col items-center justify-center h-40">
+                            <Plus className="w-6 h-6 text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground">Create Project</p>
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </div>
