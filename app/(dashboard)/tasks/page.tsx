@@ -2,7 +2,7 @@
 
 import { MyTaskHeader } from "@/components/my-task-header"
 import { TaskActionBar } from "@/components/task-action-bar"
-import MyTaskContent from "@/components/content/my-task-content"
+import { MyTaskContent } from "@/components/tasks/my-task-content"
 
 export default function TasksPage() {
     return (
