@@ -11,7 +11,18 @@ import {
     SheetTitle,
     SheetDescription,
 } from "@/components/ui/sheet";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
     Select,
     SelectContent,
@@ -343,20 +354,204 @@ function QuickViewSheetBody({ client }: QuickViewSheetBodyProps) {
     );
 }
 
+// ============================================================================
+// Edit Client Modal
+// ============================================================================
+
+interface EditClientModalProps {
+    client: Client;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
+
+function EditClientModal({ client, open, onOpenChange }: EditClientModalProps) {
+    const [formData, setFormData] = useState({
+        name: client.name,
+        status: client.status,
+        primaryContactName: client.primaryContactName,
+        primaryContactEmail: client.primaryContactEmail,
+        industry: client.industry,
+        location: client.location,
+        website: client.website,
+        owner: client.owner,
+        notes: client.notes || "",
+    });
+
+    const handleSave = () => {
+        // TODO: Implement save functionality
+        console.log("Saving client data:", formData);
+        onOpenChange(false);
+    };
+
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle>Edit client</DialogTitle>
+                    <DialogDescription>
+                        Basic information about the client, primary contact and context.
+                    </DialogDescription>
+                </DialogHeader>
+
+                <div className="grid gap-6 py-4">
+                    {/* Row 1: Client name & Status */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="clientName">Client name</Label>
+                            <Input
+                                id="clientName"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="status">Status</Label>
+                            <Select
+                                value={formData.status}
+                                onValueChange={(value: ClientStatus) => setFormData({ ...formData, status: value })}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="active">Active</SelectItem>
+                                    <SelectItem value="prospect">Prospect</SelectItem>
+                                    <SelectItem value="on_hold">On Hold</SelectItem>
+                                    <SelectItem value="archived">Archived</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+                    {/* Row 2: Primary contact name & email */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="contactName">Primary contact name</Label>
+                            <Input
+                                id="contactName"
+                                value={formData.primaryContactName}
+                                onChange={(e) => setFormData({ ...formData, primaryContactName: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="contactEmail">Primary contact email</Label>
+                            <Input
+                                id="contactEmail"
+                                type="email"
+                                value={formData.primaryContactEmail}
+                                onChange={(e) => setFormData({ ...formData, primaryContactEmail: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Row 3: Industry & Location */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="industry">Industry</Label>
+                            <Input
+                                id="industry"
+                                value={formData.industry}
+                                onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="location">Location</Label>
+                            <Input
+                                id="location"
+                                value={formData.location}
+                                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Row 4: Website & Owner */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="website">Website</Label>
+                            <Input
+                                id="website"
+                                value={formData.website}
+                                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="owner">Owner (internal)</Label>
+                            <Select
+                                value={formData.owner}
+                                onValueChange={(value) => setFormData({ ...formData, owner: value })}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select owner" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Jason Duong">Jason Duong</SelectItem>
+                                    <SelectItem value="Alex Chen">Alex Chen</SelectItem>
+                                    <SelectItem value="Emma Wright">Emma Wright</SelectItem>
+                                    <SelectItem value="Sarah Chen">Sarah Chen</SelectItem>
+                                    <SelectItem value="Alex Morgan">Alex Morgan</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+                    {/* Row 5: Notes */}
+                    <div className="space-y-2">
+                        <Label htmlFor="notes">Notes</Label>
+                        <Textarea
+                            id="notes"
+                            placeholder="Context about this client, expectations, or important details."
+                            value={formData.notes}
+                            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                            className="min-h-[100px]"
+                        />
+                    </div>
+                </div>
+
+                <DialogFooter className="flex-row justify-between sm:justify-between gap-3">
+                    <Button variant="outline" onClick={() => onOpenChange(false)} className="cursor-pointer">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
+                        Save changes
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+// ============================================================================
+// Footer Component
+// ============================================================================
+
 interface QuickViewSheetFooterProps {
+    client: Client;
     onClose: () => void;
 }
 
-function QuickViewSheetFooter({ onClose }: QuickViewSheetFooterProps) {
+function QuickViewSheetFooter({ client, onClose }: QuickViewSheetFooterProps) {
+    const [editModalOpen, setEditModalOpen] = useState(false);
+
     return (
-        <SheetFooter className="px-6 py-4 border-t flex-row justify-between gap-3">
-            <Button variant="outline" onClick={onClose} className="flex-1 cursor-pointer">
-                Cancel
-            </Button>
-            <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
-                Edit client
-            </Button>
-        </SheetFooter>
+        <>
+            <SheetFooter className="px-6 py-4 border-t flex-row justify-between gap-3">
+                <Button variant="outline" onClick={onClose} className="flex-1 cursor-pointer">
+                    Cancel
+                </Button>
+                <Button
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+                    onClick={() => setEditModalOpen(true)}
+                >
+                    Edit client
+                </Button>
+            </SheetFooter>
+
+            <EditClientModal
+                client={client}
+                open={editModalOpen}
+                onOpenChange={setEditModalOpen}
+            />
+        </>
     );
 }
 
@@ -379,7 +574,7 @@ export function ClientQuickViewSheet({ client, open, onOpenChange }: ClientQuick
             >
                 <QuickViewSheetHeader client={client} />
                 <QuickViewSheetBody client={client} />
-                <QuickViewSheetFooter onClose={() => onOpenChange(false)} />
+                <QuickViewSheetFooter client={client} onClose={() => onOpenChange(false)} />
             </SheetContent>
         </Sheet>
     );
