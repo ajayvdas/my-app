@@ -350,10 +350,10 @@ interface QuickViewSheetFooterProps {
 function QuickViewSheetFooter({ onClose }: QuickViewSheetFooterProps) {
     return (
         <SheetFooter className="px-6 py-4 border-t flex-row justify-between gap-3">
-            <Button variant="outline" onClick={onClose} className="flex-1">
+            <Button variant="outline" onClick={onClose} className="flex-1 cursor-pointer">
                 Cancel
             </Button>
-            <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
                 Edit client
             </Button>
         </SheetFooter>
