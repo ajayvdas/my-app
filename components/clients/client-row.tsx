@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,8 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { FolderOpen, MoreVertical } from "lucide-react";
 import { Client, ClientStatus } from "@/lib/types/client-type";
 import { getClientProjects } from "@/lib/data/client-data";
+import { ClientQuickViewSheet } from "./client-quick-view-sheet";
+
 
 
 function StatusBadge({ status }: { status: ClientStatus }) {
@@ -107,67 +110,81 @@ export interface ClientRowProps {
 }
 
 export function ClientRow({ client, isSelected, onSelect }: ClientRowProps) {
+    const [quickViewOpen, setQuickViewOpen] = useState(false);
+
     return (
-        <TableRow className="hover:bg-muted/50">
-            <TableCell className="w-12">
-                <Checkbox
-                    checked={isSelected}
-                    onCheckedChange={onSelect}
-                    className="border-gray-300"
-                />
-            </TableCell>
-            <TableCell>
-                <div className="flex items-center gap-2">
-                    <AvatarInitials name={client.primaryContactName} />
-                    <div className="min-w-0">
-                        <div className="font-medium text-xs text-foreground">
-                            {client.primaryContactName}
-                        </div>
-                        <div className="text-xs text-muted-foreground truncate">
-                            {client.primaryContactEmail}
+        <>
+            <TableRow className="hover:bg-muted/50">
+                <TableCell className="w-12">
+                    <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={onSelect}
+                        className="border-gray-300"
+                    />
+                </TableCell>
+                <TableCell>
+                    <div className="flex items-center gap-2">
+                        <AvatarInitials name={client.primaryContactName} />
+                        <div className="min-w-0">
+                            <div className="font-medium text-xs text-foreground">
+                                {client.primaryContactName}
+                            </div>
+                            <div className="text-xs text-muted-foreground truncate">
+                                {client.primaryContactEmail}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </TableCell>
-            <TableCell>
-                <div className="min-w-0">
-                    <div className="font-medium text-xs text-foreground">{client.name}</div>
-                    <div className="text-xs text-muted-foreground">{client.location}</div>
-                </div>
-            </TableCell>
-            <TableCell>
-                <span className="text-xs text-muted-foreground">{client.industry}</span>
-            </TableCell>
-            <TableCell>
-                <StatusBadge status={client.status} />
-            </TableCell>
-            <TableCell>
-                <ProjectCounts clientId={client.id} />
-            </TableCell>
-            <TableCell className="w-10">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
-                            <MoreVertical className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-40">
-                        <DropdownMenuItem className="text-xs cursor-pointer">
-                            Quick view
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-xs cursor-pointer">
-                            Edit client
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-xs cursor-pointer">
-                            View full page
-                        </DropdownMenuItem>
-                        <DropdownMenuItem variant="destructive" className="text-xs cursor-pointer">
-                            Archive
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </TableCell>
-        </TableRow>
+                </TableCell>
+                <TableCell>
+                    <div className="min-w-0">
+                        <div className="font-medium text-xs text-foreground">{client.name}</div>
+                        <div className="text-xs text-muted-foreground">{client.location}</div>
+                    </div>
+                </TableCell>
+                <TableCell>
+                    <span className="text-xs text-muted-foreground">{client.industry}</span>
+                </TableCell>
+                <TableCell>
+                    <StatusBadge status={client.status} />
+                </TableCell>
+                <TableCell>
+                    <ProjectCounts clientId={client.id} />
+                </TableCell>
+                <TableCell className="w-10">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
+                                <MoreVertical className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuItem
+                                className="text-xs cursor-pointer"
+                                onClick={() => setQuickViewOpen(true)}
+                            >
+                                Quick view
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="text-xs cursor-pointer">
+                                Edit client
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-xs cursor-pointer">
+                                View full page
+                            </DropdownMenuItem>
+                            <DropdownMenuItem variant="destructive" className="text-xs cursor-pointer">
+                                Archive
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </TableCell>
+            </TableRow>
+
+            <ClientQuickViewSheet
+                client={client}
+                open={quickViewOpen}
+                onOpenChange={setQuickViewOpen}
+            />
+        </>
     );
 }
+

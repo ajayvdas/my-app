@@ -289,3 +289,33 @@ export function getClientProjects(clientId: string): { active: number; onHold: n
     completed: (hash + 2) % 3,
   };
 }
+
+// Mock linked projects data
+const linkedProjectsPool = [
+  { id: "proj-1", name: "Fintech Mobile App Redesign", status: "active" as const, priority: "high" as const },
+  { id: "proj-2", name: "Internal PM System", status: "active" as const, priority: "medium" as const },
+  { id: "proj-3", name: "Client Success Dashboard", status: "active" as const, priority: "medium" as const },
+  { id: "proj-4", name: "Operations Automation Toolkit", status: "planned" as const, priority: "high" as const },
+  { id: "proj-5", name: "Data Analytics Platform", status: "active" as const, priority: "low" as const },
+];
+
+export function getClientLinkedProjects(clientId: string) {
+  const hash = clientId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const count = (hash % 4) + 1;
+  return linkedProjectsPool.slice(0, count);
+}
+
+// Mock shared files data
+const sharedFilesPool = [
+  { id: "file-1", name: "Proposal.pdf", type: "pdf" as const, size: "13.0 MB" },
+  { id: "file-2", name: "Wireframe layout.fig", type: "figma" as const, size: "13.0 MB" },
+  { id: "file-3", name: "Wireframe updates.fig", type: "figma" as const, size: "13.0 MB" },
+  { id: "file-4", name: "Brand Guidelines.pdf", type: "pdf" as const, size: "8.2 MB" },
+  { id: "file-5", name: "Meeting Notes.pdf", type: "document" as const, size: "1.5 MB" },
+];
+
+export function getClientSharedFiles(clientId: string) {
+  const hash = clientId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const count = ((hash + 2) % 4) + 1;
+  return sharedFilesPool.slice(0, count);
+}
